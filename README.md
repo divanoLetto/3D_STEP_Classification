@@ -26,7 +26,7 @@ Details about the implementation and the obtained results can be found in the `d
 1. Create Conda virtual environment:
 
     ```
-    conda create --name STEP_Classification python=3.6
+    conda create --name STEP_Classification python=3.7
     conda activate STEP_Classification
     ```
     
