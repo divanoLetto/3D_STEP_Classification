@@ -37,7 +37,7 @@ Details about the implementation and the obtained results can be found in the `d
     conda install -c pytorch pytorch
     conda install -c conda-forge trimesh
     ```
-5. Finally, make sure to obtain the [Traceparts STEP dataset](https://drive.google.com/drive/folders/1jV1B5Y8XmGY-XhjildX2BdYTEFtLK5XQ?usp=sharing) and save it in the `/Datasets/` folder.
+5. Finally, make sure to obtain the [Traceparts STEP dataset](https://drive.google.com/drive/folders/1jV1B5Y8XmGY-XhjildX2BdYTEFtLK5XQ?usp=sharing), extract the STEP models and save them in the `/Datasets/` folder.
 
 ## Usage
 
