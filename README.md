@@ -4,7 +4,7 @@
 
 --
 
-![](https://img.shields.io/github/contributors//divanoLetto/3D_STEP_Classification?color=light%20green) ![](https://img.shields.io/github/repo-size//divanoLetto/3D_STEP_Classification)
+![](https://img.shields.io/github/contributors/divanoLetto/3D_STEP_Classification?color=light%20green) ![](https://img.shields.io/github/repo-size//divanoLetto/3D_STEP_Classification)
 
 ## Abstract
 *In this paper, we introduce a new approach for retrieval and classification of 3D models that directly performs in the CAD
