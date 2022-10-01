@@ -32,7 +32,7 @@ Details about the implementation and the obtained results can be found in the `d
     ```
     git clone https://github.com/divanoLetto/3D_STEP_Classification
     ```
-3. Install CUDA Toolkit 11.3 from the [official site](https://developer.nvidia.com/cuda-11.3.0-download-archive)
+3. Install CUDA Toolkit version 11.3 from the [official site](https://developer.nvidia.com/cuda-11.3.0-download-archive).
 
 4.  Install the following requirements:
     ```
