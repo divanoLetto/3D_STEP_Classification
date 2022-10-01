@@ -49,25 +49,14 @@ Details about the implementation and the obtained results can be found in the `d
 
 ## Usage
 
-The program implements the classification and retrieval of 3D models through an approach based on graphs obtained from STEP files and the MVCNN approach based on multiple 2d views. 
+The program implements the classification and retrieval of 3D models through an approach based on graphs obtained from STEP files and the (MVCNN)[https://github.com/jongchyisu/mvcnn_pytorch] approach based on multiple 2D views.
 
 ### Graph classification and retrieval
 
-For the graph based approach run the script step_2_graph.py to convert a 3D STEP dataset into a Graph dataset and then run train_GCN.py for the classification task. The first script takes two arguments: `--path_stp` the path of the input STEP dataset and `--path_graph` the output path where the graph dataset will be saved. Alternatively, the `GCN_classification.ipynb` script performs both steps. A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `GCN_retrieval.ipynb` script.
-
-
-Two optional arguments, `--settings` and `--mode`, allow to choose the settings file to be used and the mode (`train` or `test`), e.g.: `python3 main.py --settings my_fav_settings_file --mode train`.
-
-Please note that, unlike the original project, `data_generation.py` does not need to be run anymore if `split_dataset = True` in the chosen settings file. The `settings` folder has been specially created in order to contain any number of settings files, thus allowing for an easier setup of the model.
-
-
-The following is the original abstract of the project.
+For the graph based approach run the script step_2_graph.py to convert a 3D STEP dataset into a Graph dataset and then run train_GCN.py for the classification task. The first script takes two arguments: `--path_stp` specifies the path of the input STEP dataset and `--path_graph` specifies the output path where the graph dataset will be saved. The second script takes 5 arguments: 'run_folder' indicates the run directory, 'learning_rate'  set the strating learning rate, 'batch_size'  set the batch size, 'num_epochs' set the number of traing epochs, 'dropout' the dropout probability. Alternatively, the `GCN_classification.ipynb` script performs both the dataset conversion and graph classification task. 
+A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `GCN_retrieval.ipynb` script.
 
 ---
-
-
-![Neural3DMM architecture](images/architecture_figure1.png "Neural3DMM architecture")
-
 
 # Repository Requirements
 
