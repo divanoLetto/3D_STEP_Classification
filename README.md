@@ -63,22 +63,22 @@ Then for the classification task on the relised dataset run the script:
 $ python train_GCN.py
 ```
 It takes 5 arguments: `--run_folder` indicates the run directory, `--learning_rate` sets the strating learning rate, `--batch_size` sets the batch size, `--num_epochs` sets the number of traing epochs, `--dropout` the dropout probability.    
-Alternatively, run the `GCN_classification.ipynb` script that performs both the dataset conversion and graph classification task.   
+Alternatively, we provide the `GCN_classification.ipynb` ipython notebook, that performs both the dataset conversion and graph classification task.   
 A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `GCN_retrieval.ipynb` script.
 
 ### Multi-views classification 
 
 For the multi 2D views  based approach, to convert each 3D model into a 12 2D views,  run the script:
 ```
-step_2_multiview.py 
+$ python step_2_multiview.py 
 ```
 It takes two arguments: `--path_stp` specifies the path of the input STEP dataset and `--path_multiview` specifies the output path where the multi-views dataset will be saved.   
 Then for the classification task run the script:
 ```
-train_mvcnn.py
+$ python train_mvcnn.py
 ```
 It takes 10 arguments: `--num_models` indicates the number of models per class, `--lr` sets the strating learning rate, `--bs` sets the batch size, `--weight_decay` sets the weight decay ratio of the learning rate, `--num_epoch` sets the number of training epochs, `--no_pretraining` indicates if the base net will start pretrained or not, `--cnn_name` the net name, num_views the number of 2D views, `--train_path` specifies the path of the train data, `--test_path` specifies the path of the test data, `--val_path` specifies the path of the validation data.   
-Alternatively, the `MultiViews_Classification.ipynb.ipynb` script performs both the dataset conversion and multi-views classification task.   
+Alternatively, we provide a the `MultiViews_Classification.ipynb.ipynb` ipython notebook, that performs both the dataset conversion and multi-views classification task. 
 Similarly to the graph-based approach, a model trained for classification task can then be used for the 3D retrieval task.
 
 ---
@@ -106,47 +106,3 @@ The following is the organization of the dataset directories expected by the cod
       * paths_train.npy (created by data_generation.py)
       * paths_val.npy (created by data_generation.py)
       * paths_test.npy (created by data_generation.py)
-
-# Usage
-
-#### Data preprocessing 
-
-In order to use a pytorch dataloader for training and testing, we split the data into seperate files by:
-
-```
-$ python data_generation.py --root_dir=/path/to/data_root_dir --dataset=DFAUST --num_valid=100
-```
-
-#### Training and Testing
-
-For training and testing of the mesh autoencoder, we provide an ipython notebook, which you can run with 
-
-```
-$ jupyter notebook neural3dmm.ipynb
-```
-
-The first time you run the code, it will check if the downsampling matrices are cached (calculating the downsampling and upsampling matrices takes a few minutes), and then the spirals will be calculated on the template (**spiral_utils.py** file).
-
-In the 2nd cell of the notebook one can specify their directories, hyperparameters (sizes of the filters, optimizer) etc. All this information is stored in a dictionary named _args_ that is used throughout the rest of the code. In order to run the notebook in train or test mode, simply set:
-
-```
-args['mode'] = 'train' or 'test'
-```
-
-#### Some important notes:
-* The code has compatibility with both _mpi-mesh_ and _trimesh_ packages (it can be chosen by setting the _meshpackage_ variable in the first cell of the notebook).
-* The reference points parameter needs exactly one vertex index per disconnected component of the mesh. So for DFAUST you only need one, but for COMA which has the eyes as diconnected components, you need a reference point on the head as well as one on each eye.
-* **spiral_utils.py**: In order to get the spiral ordering for each neighborhood, the spiraling code works by walking along the triangulation exploiting the fact that the triangles are all listed in a consistent way (either clockwise or counter-clockwise). These are saved as lists (their length depends on the number of hops and number of neighbors), which are then truncated or padded with -1 (index to a dummy vertex) to match all the spiral lengths to a predefined value L (in our case L = mean spiral length + 2 standard deviations of the spiral lengths). These are used by the _SpiralConv_ function in **models.py**, which is the main module of our proposed method.
-
-# Cite
-
-Please consider citing our work if you find it useful:
-
-```
-@InProceedings{bouritsas2019neural,
-    author = {Bouritsas, Giorgos and Bokhnyak, Sergiy and Ploumpis, Stylianos and Bronstein, Michael and Zafeiriou, Stefanos},
-    title = {Neural 3D Morphable Models: Spiral Convolutional Networks for 3D Shape Representation Learning and Generation},
-    booktitle   = {The IEEE International Conference on Computer Vision (ICCV)},
-    year        = {2019}
-}
-```
