@@ -24,17 +24,27 @@ Details about the implementation and the obtained results can be found in the `d
 1. Create Conda virtual environment:
 
     ```
-    conda create --name STEP_Classification python=3.7
-    conda activate STEP_Classification
+    conda create --name 3D_STEP_Classification python=3.8
+    conda activate 3D_STEP_Classification
     ```
     
-4. Clone this repository and install its requirements:
+2. Clone this repository:
     ```
     git clone https://github.com/divanoLetto/3D_STEP_Classification
-    pip install --upgrade -r 3D_STEP_Classification/requirements.txt
-    conda install -c pytorch pytorch
-    conda install -c conda-forge trimesh
     ```
+3. Install CUDA Toolkit 11.3 from the [official site](https://developer.nvidia.com/cuda-11.3.0-download-archive)
+
+4.  Install the following requirements:
+    ```
+    conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
+    conda install pyg -c pyg
+    conda install -c conda-forge tensorboardx
+    conda install -c anaconda scikit-learn
+    conda install -c conda-forge matplotlib
+    conda install -c anaconda scikit-image
+    conda install -c conda-forge pythonocc-core
+    ```
+
 5. Finally, make sure to obtain the [Traceparts STEP dataset](https://drive.google.com/drive/folders/1jV1B5Y8XmGY-XhjildX2BdYTEFtLK5XQ?usp=sharing), extract the STEP models and save them in the `/Datasets/` folder.
 
 ## Usage
