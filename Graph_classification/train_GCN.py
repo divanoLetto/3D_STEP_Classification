@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 from GCN import *
 from datetime import datetime
-from .utils.my_utils import *
-from .utils.util import *
+from utils.my_utils import *
+from utils.util import *
 import time
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import os
@@ -18,34 +18,34 @@ np.random.seed(124)
 parser = ArgumentParser("GCN", formatter_class=ArgumentDefaultsHelpFormatter, conflict_handler='resolve')
 
 parser.add_argument("--run_folder", default="../", help="")
-parser.add_argument("--dataset", default="Traceparts_6", help="Name of the dataset.")
+parser.add_argument("--dataset", default="Traceparts_6", help="Name of the graph (.graphml) dataset.")
 parser.add_argument("--learning_rate", default=0.0005, type=float, help="Learning rate")
 parser.add_argument("--batch_size", default=1, type=int, help="Batch Size")
 parser.add_argument("--num_epochs", default=50, type=int, help="Number of training epochs")
 parser.add_argument("--dropout", default=0.5, type=float, help="")
-parser.add_argument('--fold_idx', type=int, default=1, help='The fold index. 0-9.')
 args = parser.parse_args()
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 print("The calculations will be performed on the device:", device)
 
 # save paths
-model_name = args.dataset + "_" + str(datetime.today().strftime('%m-%d-%h'))
-out_dir = os.path.abspath(os.path.join(args.run_folder, "./result/runs_GCN", args.dataset))
+model_name = args.dataset + "_" + str(datetime.today().strftime('%m-%d'))
+out_dir = os.path.abspath(os.path.join(args.run_folder, "./results/runs_GCN", args.dataset))
 if not os.path.exists(out_dir + "/Models/"):
     os.makedirs(out_dir + "/Models/")
 save_path = out_dir + "/Models/" + model_name
 print("Results will be saved in:", out_dir)
 print("    The model will be saved as:", save_path)
-print(args)
+print("Settings:",args)
 
-# Load data
+# Load Graph data
 # ==================================================
 print("Loading data...")
 use_degree_as_tag = False
+fold = 0
 graphs, num_classes = my_load_data(args.dataset, use_degree_as_tag)
 
-train_graphs, test_graphs = separate_data(graphs, args.fold_idx)
+train_graphs, test_graphs = separate_data(graphs, fold)
 train_graphs, valid_graphs = split_data(train_graphs, perc=0.9)
 print("# training graphs: ", len(train_graphs))
 print_data_commposition(train_graphs)
@@ -110,7 +110,7 @@ for epoch in range(1, args.num_epochs + 1):
         best_accuracy = valid_acc
         best_loss = valid_loss
         torch.save(model.state_dict(), save_path)
-    write_acc.write('epoch ' + str(epoch) + ' fold ' + str(args.fold_idx) + ' acc ' + str(valid_acc*100) + '%\n')
+    write_acc.write('epoch ' + str(epoch) + ' fold ' + str(fold) + ' acc ' + str(valid_acc*100) + '%\n')
 
 # Plot results
 # =============================================================
@@ -120,7 +120,7 @@ plot_training_flow(ys=[train_losses, valid_losses], names=["train", "validation"
 plot_training_flow(ys=[np.array(train_accuracy)*100, np.array(valid_accuracy)*100], names=["train","validation"], path=out_dir, fig_name="/accuracy_flow", y_axis="Accuracy")
 # Evaluate on test data
 model.load_state_dict(torch.load(save_path))
-test_loss, test_acc, _ = evaluate(mmodel=model, current_graphs=test_graphs, last_round=True)
+test_loss, test_acc, _ = evaluate(mmodel=model, current_graphs=test_graphs, batch_size=args.batch_size, num_classes=num_classes, device=device, out_dir=out_dir, last_round=True)
 print("Evaluate: loss on test: ", test_loss, " and accuracy: ", test_acc * 100)
 
 write_acc.close()

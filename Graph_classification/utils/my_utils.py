@@ -113,4 +113,4 @@ def print_data_commposition(set):
             dd[g.label] = []
         dd[g.label].append(g)
     for cl in dd.keys():
-        print("class:", str(cl), " - num elements:", len(dd[cl]), "elements: ", [f.name_graph for f in dd[cl]])
+        print("class:", str(cl), " - num elements:", len(dd[cl]), " - elements: ", [f.name_graph for f in dd[cl]])

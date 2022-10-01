@@ -2,6 +2,8 @@ from sklearn import metrics
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import torch
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 def label_smoothing(true_labels: torch.Tensor, classes: int, smoothing=0.1):
@@ -35,6 +37,7 @@ def get_Adj_matrix(batch_graph):
 
     return Adj_block_idx_row, Adj_block_idx_cl
 
+
 def get_graphpool(batch_graph, device):
     start_idx = [0]
     # compute the padded neighbor list
@@ -52,6 +55,7 @@ def get_graphpool(batch_graph, device):
     graph_pool = torch.sparse.FloatTensor(idx, elem, torch.Size([len(batch_graph), start_idx[-1]]))
 
     return graph_pool.to(device)
+
 
 def get_batch_data(batch_graph, device):
     X_concat = np.concatenate([graph.node_features for graph in batch_graph], 0)
@@ -71,35 +75,33 @@ def cross_entropy(pred, soft_targets): # use nn.CrossEntropyLoss if not using so
     logsoftmax = torch.nn.LogSoftmax(dim=1)
     return torch.mean(torch.sum(- soft_targets * logsoftmax(pred), 1))
 
+
 def train(mmodel, optimizer, train_graphs, batch_size, num_classes, device):
-    mmodel.train()  # Turn on the train mode
-    total_loss = 0.
-    prediction_output = []
+    # Turn on the train mode
+    mmodel.train()
     indices = np.arange(0, len(train_graphs))
     np.random.shuffle(indices)
     for start in range(0, len(train_graphs), batch_size):
-        # print(str(start)+"/"+str(len(train_graphs)))
         end = start + batch_size
         selected_idx = indices[start:end]
         batch_graph = [train_graphs[idx] for idx in selected_idx]
+        # load graph batch
         X_concat, graph_labels, adjj = get_batch_data(batch_graph, device=device)
         graph_labels = label_smoothing(graph_labels, num_classes)
         optimizer.zero_grad()
+        # model probability scores
+        prediction_scores = mmodel(adjj, X_concat)
 
-        prediction_scores = mmodel(adjj, X_concat) #, batch_graph[0].neighbors
-
-        # loss = criterion(prediction_scores, graph_labels)
         loss = cross_entropy(prediction_scores, graph_labels)
-        #total_loss += loss.detach().item()
+        # backward pass
         loss.backward()
         torch.nn.utils.clip_grad_norm_(mmodel.parameters(), 0.5)  # prevent the exploding gradient problem
         optimizer.step()
 
-    #return total_loss/len(train_graphs)
-
 
 def evaluate(mmodel, current_graphs, batch_size, num_classes, device, out_dir, last_round=False):
-    mmodel.eval()  # Turn on the evaluation mode
+    # Turn on the evaluation mode
+    mmodel.eval()
     total_loss = 0.
     with torch.no_grad():
         # evaluating
@@ -110,31 +112,42 @@ def evaluate(mmodel, current_graphs, batch_size, num_classes, device, out_dir, l
             if len(sampled_idx) == 0:
                 continue
             batch_test_graphs = [current_graphs[j] for j in sampled_idx]
+            # load graph batch
             test_X_concat, test_graph_labels, test_adj = get_batch_data(batch_test_graphs, device=device)
-
-            prediction_scores = mmodel(test_adj, test_X_concat) #, batch_test_graphs[0].neighbors
+            # model probability scores
+            prediction_scores = mmodel(test_adj, test_X_concat)
 
             test_graph_labels = label_smoothing(test_graph_labels, num_classes)
             loss = cross_entropy(prediction_scores, test_graph_labels)
             total_loss += loss.item()
             prediction_output.append(prediction_scores.detach())
-    prediction_output = torch.cat(prediction_output, 0)
-    predictions = prediction_output.max(1, keepdim=True)[1]
-    labels = torch.LongTensor([graph.label for graph in current_graphs]).to(device)
 
+    # model probabilities output
+    prediction_output = torch.cat(prediction_output, 0)
+    # predicted labels
+    predictions = prediction_output.max(1, keepdim=True)[1]
+    # real labels
+    labels = torch.LongTensor([graph.label for graph in current_graphs]).to(device)
+    # num correct predictions
     correct = predictions.eq(labels.view_as(predictions)).sum().cpu().item()
     accuracy = correct / float(len(current_graphs))
 
+    # confusion matrix and class accuracy
     matrix = confusion_matrix(np.array(labels.cpu()), np.array(predictions.cpu()))
     matrix = matrix.astype('float') / matrix.sum(axis=1)[:, np.newaxis]
     acc_x_class = matrix.diagonal() * 100
-    if last_round:
 
+    if last_round:
+        # plot and save statistics
         print("Accuracy per class :")
         print(acc_x_class)
         with open(out_dir + "/test_results.txt", 'w') as f:
             f.write("Evaluate: loss on test: "+ str(total_loss/len(current_graphs)) + " and accuracy: " + str(accuracy * 100)+"\n")
             f.write("Accuracy per class : "+ str(matrix.diagonal())+"\n")
             f.write(metrics.classification_report(np.array(labels.cpu()), np.array(predictions.cpu()), digits=3))
+
+        ax = sns.heatmap(matrix, annot=True, cmap='Blues')
+        ax.set_title('Confusion Matrix')
+        plt.savefig(out_dir + "/Confusion Matrix")
 
     return total_loss/len(current_graphs), accuracy, acc_x_class
