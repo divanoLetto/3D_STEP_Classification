@@ -47,11 +47,11 @@ Details about the implementation and the obtained results can be found in the `d
 
 5. Finally, make sure to obtain the [Traceparts STEP dataset](https://drive.google.com/drive/folders/1jV1B5Y8XmGY-XhjildX2BdYTEFtLK5XQ?usp=sharing), extract the STEP models and save them in the `/Datasets/` folder.
 
-## Usage
+# Usage
 
 The program implements the classification and retrieval of 3D models through an approach based on graphs obtained from STEP files and the [MVCNN](https://github.com/jongchyisu/mvcnn_pytorch) approach based on multiple 2D views.
 
-### Graph classification and retrieval
+## Graph classification and retrieval
 
 For the graph based approach, to convert a 3D STEP dataset into a Graph dataset, run the script:    
 ```
@@ -66,7 +66,7 @@ It takes 5 arguments: `--run_folder` indicates the run directory, `--learning_ra
 Alternatively, we provide the `GCN_classification.ipynb` ipython notebook, that performs both the dataset conversion and graph classification task.   
 A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `GCN_retrieval.ipynb` script.
 
-### Multi-views classification 
+## Multi-views classification 
 
 For the multi 2D views  based approach, to convert each 3D model into a 12 2D views,  run the script:
 ```
@@ -87,7 +87,7 @@ Similarly to the graph-based approach, a model trained for classification task c
 
 This code was written in Pytorch 1.11. with CUDA Toolkit version 11.3 to enable GPU computations. We recommend setting up a virtual environment using [Miniconda](https://docs.conda.io/en/latest/miniconda.html). Python 3.8 is required for the PythonOCC library needed for the conversion from STEP to the multi-views data.
 
-# Data Organization
+## Data Organization
 
 The following is the organization of the dataset directories expected by the code:
 
