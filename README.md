@@ -94,20 +94,16 @@ The following is the organization of the dataset directories expected by the cod
 * data **root_dir**/
   * **dataset** name/ (eg Traceparts)
     * STEP_models (all of the 3D STEP models divided by class)
-      * Class 0
-      * Class 1
+      * Class 0 (all STEP models of the class 0)
+      * Class 1 (all STEP models of the class q)
       * ...
     * graphml_models (all of the converted graphml models divided by class)
-      * Class 0
-      * Class 1
+      * Class 0 (all graphml models of the class 0)
+      * Class 1 (all graphml models of the class 1)
       * ... 
     * MVCNN_models (all of the converted multi-views 2D images divided by class)
       * Class 0
-        * train
-        * test
-        * valid
-      * Class 1
-        * train
-        * test
-        * valid
+        * train (the train set 2D views of the class 0)
+        * test (the test set 2D views of the class 0)
+        * valid (the validation set 2D views of the class 0)
       * ...
