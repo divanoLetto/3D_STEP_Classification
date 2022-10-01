@@ -59,28 +59,14 @@ A Graph Convolutional Neural Network model trained for the classification task i
 
 ### MultiView classification 
 
-For the multi 2D views based approach run the script `step_2_multiview.py` to convert each 3D model into a 12 2D views taken around it. Then run `train_mvcnn.py` for the classification task. The first script takes two arguments: `--path_stp` specifies the path of the input STEP dataset and `--path_multiview` specifies the output path where the multi views dataset will be saved. The second script takes 5 arguments: `--num_models` indicates the number of models per class, `--lr` sets the strating learning rate, `--bs` sets the batch size, `--weight_decay` sets the weight decay ratio of the learning rate, `--num_epoch` sets the number of training epochs, `--no_pretraining` indicates if the base net will start pretrained or not, `--cnn_name` the net name, num_views the number of 2D views, `--train_path` specifies the path of the train data, `--test_path` specifies the path of the test data, `--val_path` specifies the path of the validation data.   
+For the multi 2D views based approach run the script `step_2_multiview.py` to convert each 3D model into a 12 2D views taken around it. Then run `train_mvcnn.py` for the classification task. The first script takes two arguments: `--path_stp` specifies the path of the input STEP dataset and `--path_multiview` specifies the output path where the multi views dataset will be saved. The second script takes 10 arguments: `--num_models` indicates the number of models per class, `--lr` sets the strating learning rate, `--bs` sets the batch size, `--weight_decay` sets the weight decay ratio of the learning rate, `--num_epoch` sets the number of training epochs, `--no_pretraining` indicates if the base net will start pretrained or not, `--cnn_name` the net name, num_views the number of 2D views, `--train_path` specifies the path of the train data, `--test_path` specifies the path of the test data, `--val_path` specifies the path of the validation data.   
 Alternatively, the `MultiViews_Classification.ipynb.ipynb` script performs both the dataset conversion and graph classification task. 
 
 ---
 
 # Repository Requirements
 
-This code was written in Pytorch 1.1. We use tensorboardX for the visualisation of the training metrics. We recommend setting up a virtual environment using [Miniconda](https://docs.conda.io/en/latest/miniconda.html). To install Pytorch in a conda environment, simply run 
-
-```
-$ conda install pytorch torchvision -c pytorch
-```
-
-Then the rest of the requirements can be installed with 
-
-```
-$ pip install -r requirements.txt
-```
-
-### Mesh Decimation
-For the mesh decimation code we use a function from the [COMA repository](https://github.com/anuragranj/coma) (the files **mesh_sampling.py** and **shape_data.py** - previously **facemesh.py** - were taken from the COMA repo and adapted to our needs). In order to decimate your template mesh, you will need the [MPI-Mesh](https://github.com/MPI-IS/mesh) package (a mesh library similar to Trimesh or Open3D).  This package requires Python 2. However once you have cached the generated downsampling and upsampling matrices, it is possible to run the rest of the code with Python 3 as well, if necessary.
-
+This code was written in Pytorch 1.11. with CUDA Toolkit version 11.3 to enable GPU computations. We recommend setting up a virtual environment using [Miniconda](https://docs.conda.io/en/latest/miniconda.html). Python 3.8 is required for the PythonOCC library needed for the conversion from STEP to the multi-views data.
 
 # Data Organization
 
