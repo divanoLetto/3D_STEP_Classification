@@ -49,7 +49,7 @@ Details about the implementation and the obtained results can be found in the `d
 
 ## Usage
 
-The program implements the classification and retrieval of 3D models through an approach based on graphs obtained from STEP files and the (MVCNN)[https://github.com/jongchyisu/mvcnn_pytorch] approach based on multiple 2D views.
+The program implements the classification and retrieval of 3D models through an approach based on graphs obtained from STEP files and the [MVCNN](https://github.com/jongchyisu/mvcnn_pytorch) approach based on multiple 2D views.
 
 ### Graph classification and retrieval
 
