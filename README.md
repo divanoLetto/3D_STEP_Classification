@@ -92,17 +92,10 @@ This code was written in Pytorch 1.11. with CUDA Toolkit version 11.3 to enable 
 The following is the organization of the dataset directories expected by the code:
 
 * data **root_dir**/
-  * **dataset** name/ (eg DFAUST)
-    * template
-      * template.obj (all of the spiraling and downsampling code is run on the template only once)
-      * downsample_method/
-        * downsampling_matrices.pkl (created by the code the first time you run it)
-    * preprocessed/
-      * train.npy (number_meshes, number_vertices, 3) (no Faces because they all share topology)
-      * test.npy 
-      * points_train/ (created by data_generation.py)
-      * points_val/ (created by data_generation.py)
-      * points_test/ (created by data_generation.py)
-      * paths_train.npy (created by data_generation.py)
-      * paths_val.npy (created by data_generation.py)
-      * paths_test.npy (created by data_generation.py)
+  * **dataset** name/ (eg Traceparts)
+    * STEP_models (all of the 3D STEP models divided by class)
+      * Class 0
+      * Class 1
+      * ...
+    * graphml_models (all of the converted graphml models divided by class)
+    * MVCNN_models (all of the converted multi-views 2D images divided by class)
