@@ -53,8 +53,13 @@ The program implements the classification and retrieval of 3D models through an 
 
 ### Graph classification and retrieval
 
-For the graph based approach run the script `step_2_graph.py` to convert a 3D STEP dataset into a Graph dataset and then run `train_GCN.py` for the classification task. The first script takes two arguments: `--path_stp` specifies the path of the input STEP dataset and `--path_graph` specifies the output path where the graph dataset will be saved. The second script takes 5 arguments: `--run_folder` indicates the run directory, `--learning_rate` sets the strating learning rate, `--batch_size` sets the batch size, `--num_epochs` sets the number of traing epochs, `--dropout` the dropout probability.    
-Alternatively, the `GCN_classification.ipynb` script performs both the dataset conversion and graph classification task.   
+For the graph based approach, to convert a 3D STEP dataset into a Graph dataset, run the script:    
+`$ python step_2_graph.py`    
+It takes two arguments: `--path_stp` specifies the path of the input STEP dataset and `--path_graph` specifies the output path where the graph dataset will be saved.
+Then for the classification task on the relised dataset run the script:   
+`$ python train_GCN.py`.     
+It takes 5 arguments: `--run_folder` indicates the run directory, `--learning_rate` sets the strating learning rate, `--batch_size` sets the batch size, `--num_epochs` sets the number of traing epochs, `--dropout` the dropout probability.    
+Alternatively, run the `GCN_classification.ipynb` script that performs both the dataset conversion and graph classification task.   
 A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `GCN_retrieval.ipynb` script.
 
 ### Multi-views classification 
