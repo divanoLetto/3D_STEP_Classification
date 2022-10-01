@@ -98,4 +98,16 @@ The following is the organization of the dataset directories expected by the cod
       * Class 1
       * ...
     * graphml_models (all of the converted graphml models divided by class)
+      * Class 0
+      * Class 1
+      * ... 
     * MVCNN_models (all of the converted multi-views 2D images divided by class)
+      * Class 0
+        * train
+        * test
+        * valid
+      * Class 1
+        * train
+        * test
+        * valid
+      * ...
