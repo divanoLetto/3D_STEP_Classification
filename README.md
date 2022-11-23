@@ -99,3 +99,20 @@ The following is the organization of the dataset directories expected by the cod
         * test (the test set 2D views of the class 0)
         * valid (the validation set 2D views of the class 0)
       * ...
+
+# Cite
+
+Please consider citing our work if you find it useful:
+
+```
+@misc{https://doi.org/10.48550/arxiv.2210.16815,
+  doi = {10.48550/ARXIV.2210.16815},
+  url = {https://arxiv.org/abs/2210.16815},
+  author = {Mandelli, L. and Berretti, S.},
+  keywords = {Computer Vision and Pattern Recognition (cs.CV), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  title = {CAD 3D Model classification by Graph Neural Networks: A new approach based on STEP format},
+  publisher = {arXiv},
+  year = {2022},
+  copyright = {Creative Commons Attribution 4.0 International}
+}
+```
