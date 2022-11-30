@@ -73,6 +73,19 @@ It takes 10 arguments: `--num_models` indicates the number of models per class, 
 Alternatively, we provide a the `MultiViews_Classification.ipynb.ipynb` ipython notebook, that performs both the dataset conversion and multi-views classification task. 
 Similarly to the graph-based approach, a model trained for classification task can then be used for the 3D retrieval task.
 
+## PointNet classification 
+
+For the PointNet approach, to convert each 3D model into a point cloud, run the script:
+```
+$ python step_2_pointcloud.py 
+```
+It takes three arguments: `--path_stp` specifies the path of the input STEP dataset, `--path_stl` specifies the temporary path of the STL dataset and `--path_poitcloud` specifies the output path where the poitcloud dataset will be saved.   
+Then for the classification task run the script:
+```
+$ python train_pointNet.py
+```
+It requires that the point cloud dataset has the same structure as the modelnet40 dataset as described in next Data Organization session.
+
 ---
 
 # Repository Requirements
@@ -99,6 +112,13 @@ The following is the organization of the dataset directories expected by the cod
         * test (the test set 2D views of the class 0)
         * valid (the validation set 2D views of the class 0)
       * ...
+    * PointCloud_models
+      * Class 0 (all pointcloud .text models of the class 0)
+      * Class 1 (all pointcloud .text models of the class 1)
+      * Class ...
+      * PointCloud_models_shape_names.txt (Name of the classes, for example: 0, 1, ...)
+      * PointCloud_models_train.txt (Name of the models of the train set, for example: 0_7, 0_39, ...)
+      * PointCloud_models_test.text (Name of the models of the test set, for example: 0_8, 0_23, ...)
 
 # Cite
 
