@@ -84,7 +84,7 @@ Then for the classification task run the script:
 ```
 $ python train_pointNet.py
 ```
-It requires that the point cloud dataset has the same structure as the modelnet40 dataset as described in next Data Organization session.
+It requires that the point cloud dataset has the same structure as the classic Modelnet40 dataset, as described in next Data Organization session.
 
 ---
 
