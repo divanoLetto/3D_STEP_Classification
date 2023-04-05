@@ -55,8 +55,8 @@ Then for the classification task on the relised dataset run the script:
 $ python train_GCN.py
 ```
 It takes 5 arguments: `--run_folder` indicates the run directory, `--learning_rate` sets the strating learning rate, `--batch_size` sets the batch size, `--num_epochs` sets the number of traing epochs, `--dropout` the dropout probability.    
-Alternatively, we provide the `GCN_classification.ipynb` ipython notebook, that performs both the dataset conversion and graph classification task.   
-A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `GCN_retrieval.ipynb` script.
+Alternatively, we provide the `Graph_classification.ipynb` ipython notebook, that performs both the dataset conversion and graph classification task.   
+A Graph Convolutional Neural Network model trained for the classification task in this way can then be used for the retrieval task by running the `Graph_retrieval.ipynb` script.
 
 ## Multi-views classification 
 
