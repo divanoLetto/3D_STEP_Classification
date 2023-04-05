@@ -30,7 +30,7 @@ def my_load_data(dataset, degree_as_tag=False):
     g_list = []
     label_dict = {}
     feat_dict = {}
-    dataset_path = "../Datasets/" + dataset+ "/"
+    dataset_path = "../Datasets/graphml_models/" + dataset+ "/"
     # Carico un grafo, il valore dei nodi è il loro tipo
     for dir in os.listdir(dataset_path):
         if os.path.isdir(dataset_path + dir):
