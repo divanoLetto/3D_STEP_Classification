@@ -26,11 +26,12 @@ class S2VGraph(object):
         self.max_neighbor = 0
         self.name_graph = name_graph
 
+
 def my_load_data(dataset, degree_as_tag=False):
     g_list = []
     label_dict = {}
     feat_dict = {}
-    dataset_path = "../Datasets/graphml_models/" + dataset+ "/"
+    dataset_path = "../Datasets/" + dataset+ "/"
     # Carico un grafo, il valore dei nodi è il loro tipo
     for dir in os.listdir(dataset_path):
         if os.path.isdir(dataset_path + dir):
