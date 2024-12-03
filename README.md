@@ -37,7 +37,7 @@ Details about the implementation and the obtained results can be found in the `d
     conda install -c conda-forge pythonocc-core
     ```
 
-5. Finally, make sure to obtain the [Traceparts STEP dataset](https://drive.google.com/drive/folders/1r4u6CuC2shbbfm0kaqOKt5WB3BJ5OCLm?usp=sharing), extract the STEP models and save them in the `/Datasets/` folder.
+5. Finally, make sure to obtain the [Traceparts STEP dataset](https://drive.google.com/drive/folders/1JmrJCWOB8ejpYnvAS9ViY7TmJl2yCP5Z?usp=sharing), extract the STEP models and save them in the `/Datasets/` folder.
 
 # Usage
 
